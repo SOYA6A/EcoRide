@@ -5,6 +5,44 @@ body {
     padding: 20px;
 }
 
+header {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+nav{
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+.menu a {
+    text-decoration: none;
+    color: black;
+}
+.btn-connexion {
+    padding: 0.5rem 1rem;
+    background-color: #4caf50;
+    color: white !important;
+    border-radius: 5px;
+
+}
+
 .container {
     max-width: 600px;
     margin: auto;
@@ -33,7 +71,7 @@ input[type="date"] {
     width: 100%;
     padding: 10px;
     margin: 5px 0 15px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #efe9e9;
     border-radius: 4px;
 }
 
@@ -57,7 +95,6 @@ ul {
 }
 
 li {
-    background: #e9ecef;
     margin: 5px 0;
     padding: 10px;
     border-radius: 4px;
