@@ -43,6 +43,13 @@ nav{
 
 }
 
+.main-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+
+}
+
 .container {
     max-width: 600px;
     margin: auto;
