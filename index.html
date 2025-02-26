@@ -35,19 +35,76 @@
 
 <!--section recherche d'itinéraire-->
     <section class="search-section">
-        <div class="search-container">
-            <h2>Recherchez votre itinéraire</h2>
+    <div class="search-container">
+    <h2>Recherchez votre itinéraire</h2>
             <form id="searchForm">
-                <!--champ de saisie pour le départ-->
-                <div class="form-group">
-                    <label for="depart">Départ</label>
-                    <input type="text" id="depart" required>
+
+        <!--champ de saisie pour le départ-->
+        <div class="form-group">
+        <label for="depart">Départ</label>
+        <input type="text" id="depart" required>
+        </div>
+
+    <!--champ de saisie pour l'arrivée-->
+    <div class="form-group">
+      <label for="arrivée">Arrivée</label>
+      <input type="text" id="arrivée" required>
+      </div>
+      <div class="form-group">
+    <label for="date">Date</label>
+    <input type="date" id="date" required>
+    </div>
+
+    <!--champ nombre de passagers-->
+    <div class="form-group">
+    <label for="passengers">Passagers</label>
+    <select id="passengers">
+    <option value="1">1 passager</option>
+    <option value="2">2 passagers</option>
+    <option value="3">3 passagers</option>
+     <option value="4">+4 passagers</option>
+        </select>
+    </div>
+     <!--section des filtres avancés-->
+    <div class="advanced-filters">
+         <!--bouton pour afficher et masquer les filtres avancés-->
+        <button type="button" class="advanced-filters" id="toggle-filters">
+             Filtres avancés ▼
+          </button>
+
+          <!--contenu des filtres avancés (masqué par défaut)-->
+           <div id="advanced-filters-content" class="hidden">
+               <!--filtre de prix-->
+             <div class="filter-row">
+            <div class="filter-group">
+                  <label>Prix maximum</label>
+                  <div class="price-range">
+                    <input type="range" id="price-range" min="0" max="100" value="50">
+                    <span id="price-value">50€</span>
                 </div>
-                <!--champ de saisie pour l'arrivée-->
-                <div class="form-group">
-                    <label for="arrivée">Arrivée</label>
-                    <input type="date" id="date" required>
+            </div>
+            </div>
+            
+            
+            <!--options sup-->
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Options</label>
+                    <div class="checkbox-group">
+                        <!--option non-fumeur-->
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="smoking">
+                            <label for="smoking">Non-fumeur</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pets">
+                            <label for="pets">Animaux acceptés</label>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
                 <!--bouton de recherche-->
                 <button type="submit" class="search-btn">Recherche</button>
             </form>

@@ -81,9 +81,10 @@ nav{
   
 }
 
-p {
+.main p h1{
     text-align: center;
 }
+
 
 
 .container {
@@ -125,13 +126,14 @@ button:hover {
 }
 
 .search-container{
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+    max-width: 600px;
+    margin: auto;
+    padding: 3rem;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0,0.1);
+    box-shadow: 0 2px 5px rgba(97, 43, 43, 0.1);
 }
+
 input {
     width: 95%;
     padding: 0.8rem;
@@ -147,8 +149,73 @@ ul {
     padding: 0;
 }
 
-li {
-    margin: 5px 0;
+
+
+
+  /* Style des étiquettes */
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: black;
+  }
+  
+  /* Style des champs de saisie et listes déroulantes */
+  input, select {
+    width: 100%;
     padding: 10px;
-    border-radius: 4px;
-}
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Section des filtres avancés */
+  .advanced-filters {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 10px;
+  }
+  
+  /* Bouton pour afficher/masquer les filtres */
+  .advanced-toggle {
+    background: none;
+    border: none;
+    color: green;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  /* Groupe de cases à cocher */
+  .checkbox-group {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Éléments des cases à cocher */
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Style spécifique pour les cases à cocher */
+  .checkbox-item input {
+    width: auto;
+  }
+  
+  /* Style des lignes du formulaire */
+  .form-row, .filter-row {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Style du curseur de prix */
+  .price-range input {
+    flex: 1;
+  }
+
+  /* Classe pour masquer des éléments */
+  .hidden {
+    display: none;
+  }
