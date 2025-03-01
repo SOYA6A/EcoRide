@@ -44,6 +44,20 @@ nav{
 
 }
 
+.btn-primary {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 7px, 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 50px auto ;
+    border-radius: 5px;
+    text-align: center;
+
+
+}
+
 .presentation {
     background-color: rgba(234, 232, 232, 0.209);
     padding: 4rem 2rem;
@@ -118,7 +132,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+ /* j'ai enlevé un width:100% ici */
 }
 
 button:hover {
@@ -172,9 +186,9 @@ ul {
   /* Section des filtres avancés */
   .advanced-filters {
     border-top: 1px solid #eee;
-    padding-top: 15px;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    padding-top: 8px;
+    margin-top: 1px;
+    margin-bottom: 1px;
   }
   
   /* Bouton pour afficher/masquer les filtres */
