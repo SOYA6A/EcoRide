@@ -54,3 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('Recherche de trajet effectuée !');
     });
   });
+
+  function initialiserEvenements() {
+    const boutonCreer = document.getElementById ('creer-covoiturage');
+    if (boutonCreer) {
+        boutonCreer.addEventListener ('click', ouvriModal);
+    }
+  }
