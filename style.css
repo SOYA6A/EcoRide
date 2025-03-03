@@ -381,3 +381,78 @@ ul {
         gap: 0;
     }
 }
+
+.btn-secondary {
+    background-color: #81c784;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #66bb6a;
+}
+
+/* Recent Rides Section */
+.trajets-recents {
+    margin: 50px 0;
+}
+
+.trajets-recents h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #2e7d32;
+}
+
+.liste-trajets {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.trajet-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.trajet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.trajet-header h3 {
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.eco-badge {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.trajet-details {
+    margin-bottom: 20px;
+}
+
+.trajet-details p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
