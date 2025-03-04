@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-
+//faire en sorte de connecter ça a une api 
 
 
 
@@ -161,7 +161,7 @@ function creerModalStructure() {
         </div>
     `;
     
-    // Ajouter le modal au body
+    // Ajouter le modal au body (ajouter le modal au html directement non ?)
     document.body.appendChild(modalOverlay);
     
     // Ajouter des écouteurs d'événements aux éléments du modal
