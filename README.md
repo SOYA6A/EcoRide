@@ -32,8 +32,11 @@ Feuille de route:
 
   Objectif: Ajouter des fonctionnalités essentielles
   
-  ⬜️ système d'authentification utilisateur:
+  ⬜️ Système d'authentification utilisateur:
   - Inscription
   - Profil utilisateur
   - Connection
+ 
+  ⬜️ Système de réservation de trajet:
+  - Confirmation de réservation (par mail maybe)
   
