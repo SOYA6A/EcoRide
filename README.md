@@ -17,3 +17,8 @@ Utilisation:
 - Cliquez sur le bouton "créer un covoiturage".
 - Remplissez le formulaire avec vos information de trajet.
 - Publiez votre covoiturage.
+
+technologie utilisées:
+- HTML
+- CSS
+- JavaScript
