@@ -18,7 +18,22 @@ Utilisation:
 - Remplissez le formulaire avec vos information de trajet.
 - Publiez votre covoiturage.
 
-technologie utilisées:
+Technologies utilisées:
 - HTML
 - CSS
 - JavaScript
+
+Feuille de route:
+- Ajouter un système d'authentification
+  
+   ✅ Affichage des trajets récents
+  
+   ✅ Formulaire de création de cvoiturage
+
+  Objectif: Ajouter des fonctionnalités essentielles
+  
+  ⬜️ système d'authentification utilisateur:
+  - Inscription
+  - Profil utilisateur
+  - Connection
+  
