@@ -483,12 +483,6 @@ body {
     padding: 20px;
 }
 
-header {
-    background-color: var(--primary-green);
-    color: var(--white);
-    padding: 20px 0;
-    text-align: center;
-}
 
 .contact-section {
     display: flex;
