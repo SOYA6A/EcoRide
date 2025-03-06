@@ -30,6 +30,8 @@ Feuille de route:
   
    ✅ Formulaire de création de cvoiturage
 
+   ✅ Section contact avec les mentions l
+
   Objectif: Ajouter des fonctionnalités essentielles
   
   ⬜️ Système d'authentification utilisateur:
