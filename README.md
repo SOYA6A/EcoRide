@@ -25,6 +25,7 @@ Technologies utilisées:
 
 Feuille de route:
 - Ajouter un système d'authentification
+- button connection in progress 👩🏽‍💻⚠️
   
    ✅ Affichage des trajets récents
   
