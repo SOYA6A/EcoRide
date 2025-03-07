@@ -32,6 +32,8 @@ Feuille de route:
 
    ✅ Section contact avec les mentions l
 
+   ✅ Section envoyez-nous un message 
+
   Objectif: Ajouter des fonctionnalités essentielles
   
   ⬜️ Système d'authentification utilisateur:
