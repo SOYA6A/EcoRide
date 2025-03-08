@@ -1,4 +1,4 @@
-// script.js
+
 
 // Attendre que le document soit complètement chargé
 document.addEventListener('DOMContentLoaded', function() {
