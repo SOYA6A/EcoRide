@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Utilisateur - Covoiturage Écologique</title>
+    <link rel="stylesheet" href="espace-utilisateur.css">
+</head>
+<body>
+    <div class="user-space-container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="avatar">
+                    <img src="https://via.placeholder.com/80" alt="Photo de profil">
+                </div>
+                <h3>Bonjour, <span id="username">Utilisateur</span></h3>
+                <p class="user-role" id="userCurrentRole">Rôle actuel : Non défini</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active" data-section="dashboard">Tableau de bord</a></li>
+                    <li><a href="#" data-section="role-select">Choisir mon rôle</a></li>
+                    <li><a href="#" data-section="my-trips">Mes trajets</a></li>
+                    <li><a href="#" data-section="profile">Mon profil</a></li>
+                    <li><a href="#" data-section="messages">Messages</a></li>
+                    <li><a href="#" data-section="eco-impact">Impact écologique</a></li>
+                </ul>
+            </nav>
+            
+            <div class="logout-section">
+                <a href="#" class="logout-btn">Déconnexion</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <h2>Tableau de bord</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>5</h3>
+                        <p>Trajets effectués</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>2.7 kg</h3>
+                        <p>CO2 économisé</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>35 €</h3>
+                        <p>Économies réalisées</p>
+                    </div>
+                </div>
+                
+                <div class="upcoming-trips">
+                    <h3>Prochains trajets</h3>
+                    <div class="trip-card">
+                        <div class="trip-date">Lun. 17 Mars</div>
+                        <div class="trip-route">
+                            <span class="trip-time">08:30</span>
+                            <span class="trip-from">Paris</span>
+                            <span class="trip-to">Lyon</span>
+                        </div>
+                        <div class="trip-role">Passager</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Role Selection Section -->
+            <section id="role-select" class="content-section">
+                <h2>Choisir mon rôle</h2>
+                <p class="section-intro">Sélectionnez votre rôle pour les trajets sur notre plateforme de covoiturage écologique.</p>
+                
+                <div class="role-selection">
+                    <div class="role-card" id="driver-role">
+                        <div class="role-icon">🚗</div>
+                        <h3>Chauffeur</h3>
+                        <p>Proposez des trajets avec votre véhicule et contribuez à réduire l'empreinte carbone tout en partageant les frais.</p>
+                        <button class="role-btn" data-role="driver">Choisir</button>
+                    </div>
+                    
+                    <div class="role-card" id="passenger-role">
+                        <div class="role-icon">👥</div>
+                        <h3>Passager</h3>
+                        <p>Recherchez et réservez des trajets proposés par d'autres utilisateurs pour voyager de manière économique et écologique.</p>
+                        <button class="role-btn" data-role="passenger">Choisir</button>
+                    </div>
+                    
+                    <div class="role-card" id="both-role">
+                        <div class="role-icon">🔄</div>
+                        <h3>Les deux</h3>
+                        <p>Alternez entre les rôles de chauffeur et de passager selon vos besoins et disponibilités.</p>
+                        <button class="role-btn" data-role="both">Choisir</button>
+                    </div>
+                </div>
+                
+                <div class="current-role-info">
+                    <p>Votre rôle actuel : <strong id="currentRoleDisplay">Non défini</strong></p>
+                </div>
+            </section>
+            
+            <!-- Other sections (placeholders) -->
+            <section id="my-trips" class="content-section">
+                <h2>Mes trajets</h2>
+                <p>Ici vous pourrez consulter l'historique de vos trajets et gérer vos réservations.</p>
+            </section>
+            
+            <section id="profile" class="content-section">
+                <h2>Mon profil</h2>
+                <p>Ici vous pourrez modifier vos informations personnelles et préférences.</p>
+            </section>
+            
+            <section id="messages" class="content-section">
+                <h2>Messages</h2>
+                <p>Ici vous pourrez consulter vos messages avec d'autres utilisateurs.</p>
+            </section>
+            
+            <section id="eco-impact" class="content-section">
+                <h2>Impact écologique</h2>
+                <p>Ici vous pourrez visualiser votre contribution écologique grâce au covoiturage.</p>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links and sections
+                document.querySelectorAll('.sidebar-nav a').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Show selected section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Role selection
+        document.querySelectorAll('.role-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const role = this.getAttribute('data-role');
+                let roleText = '';
+                
+                switch(role) {
+                    case 'driver':
+                        roleText = 'Chauffeur';
+                        break;
+                    case 'passenger':
+                        roleText = 'Passager';
+                        break;
+                    case 'both':
+                        roleText = 'Chauffeur et Passager';
+                        break;
+                }
+                
+                document.getElementById('currentRoleDisplay').textContent = roleText;
+                document.getElementById('userCurrentRole').textContent = 'Rôle actuel : ' + roleText;
+                
+                // Remove selected class from all role cards
+                document.querySelectorAll('.role-card').forEach(card => card.classList.remove('selected'));
+                
+                // Add selected class to the chosen role card
+                document.getElementById(role + '-role').classList.add('selected');
+                
+                alert('Vous avez choisi le rôle : ' + roleText);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -52,7 +52,7 @@ label {
 }
 
 input[type="email"],
-input[type="password"]
+input[type="password"],
 input[type="pseudo"] {
     width: 100%;
     padding: 10px;
