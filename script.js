@@ -111,6 +111,12 @@ function creerModalStructure() {
                     <input type="text" id="arrivee" name="arrivee" required>
                 </div>
                 
+                <div class="form-group">
+                <label for="duree du trajet"> Durée du trajet</label>
+                <input type="time" id="duree du trajet" name="duree du trajet" required>
+
+
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="date">Date</label>
@@ -118,7 +124,7 @@ function creerModalStructure() {
                     </div>
                     
                     <div class="form-group">
-                        <label for="heure">Heure</label>
+                        <label for="heure">Heure de départ</label>
                         <input type="time" id="heure" name="heure" required>
                     </div>
                 </div>
@@ -238,7 +244,7 @@ function soumettreCovoiturage(event) {
     covoiturageData.utilisateurId = utilisateurActuel.id;
     covoiturageData.dateCreation = new Date().toISOString();
     
-    // Dans un environnement réel, nous enverrions ces données à un serveur
+    // je dois envoyer les éléments suivant à un serveur
     // Mais pour cette démonstration, nous allons simplement simuler une réponse
     console.log('Données du covoiturage:', covoiturageData);
     
