@@ -348,3 +348,5 @@ function ajouterCarteTrajet(covoiturageData) {
         listeTrajets.insertBefore(nouvelleCard, listeTrajets.firstChild);
     }
 }
+
+

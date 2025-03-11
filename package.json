@@ -1,0 +1,23 @@
+{
+  "name": "ecoride",
+  "version": "1.0.0",
+  "description": "EcoRide 🌿🚙🛣️",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOYA6A/EcoRide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SOYA6A/EcoRide/issues"
+  },
+  "homepage": "https://github.com/SOYA6A/EcoRide#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

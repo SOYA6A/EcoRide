@@ -3,173 +3,833 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Utilisateur - Covoiturage Écologique</title>
-    <link rel="stylesheet" href="espace-utilisateur.css">
+    <title>EcoRide - Votre Espace Personnel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary: #3498db;
+            --accent: #f1c40f;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            background-image: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            box-shadow: 0 10px 30px var(--shadow);
+            color: white;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .eco-icon {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 8rem;
+            right: -20px;
+            bottom: -30px;
+            transform: rotate(-15deg);
+        }
+        
+        .profile-container {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+        
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            background: #fff;
+            position: relative;
+        }
+        
+        .tab-slider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            color: #888;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+        }
+        
+        .tab i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .tab:hover {
+            color: var(--primary-dark);
+        }
+        
+        .tabcontent {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 1.6rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        h3 {
+            margin: 20px 0 15px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+            background-color: #fff;
+        }
+        
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .radio-item, .checkbox-item {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .radio-item input, .checkbox-item input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .radio-label, .checkbox-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: #f1f1f1;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.2s;
+        }
+        
+        .radio-item input:checked ~ .radio-label,
+        .checkbox-item input:checked ~ .checkbox-label {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .radio-label i, .checkbox-label i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .vehicle-container {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--secondary);
+            position: relative;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .vehicle-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .vehicle-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-right: 15px;
+        }
+        
+        .delete-vehicle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .delete-vehicle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-center {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .add-vehicle-btn {
+            margin-bottom: 30px;
+        }
+        
+        .preference-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .preference-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #f1f1f1;
+            color: #555;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .badge-success {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--primary-dark);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            animation: slideInRight 0.5s, fadeOut 0.5s 3s forwards;
+            z-index: 1000;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; visibility: hidden; }
+        }
+        
+        .success-message i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Style spécial pour les préférences */
+        .preference-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .preference-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .toggle-label {
+            margin-left: 15px;
+            font-weight: 500;
+        }
+        
+        /* Pour les écrans mobiles */
+        @media (max-width: 768px) {
+            .tab i {
+                margin-right: 0;
+                margin-bottom: 5px;
+                display: block;
+                font-size: 1.5rem;
+            }
+            
+            .tab {
+                padding: 15px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .vehicle-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .vehicle-icon {
+                margin-bottom: 10px;
+            }
+            
+            .tabcontent {
+                padding: 20px 15px;
+            }
+            
+            .radio-group, .checkbox-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="user-space-container">
-        <div class="sidebar">
-            <div class="profile-section">
-                <div class="avatar">
-                    <img src="https://via.placeholder.com/80" alt="Photo de profil">
-                </div>
-                <h3>Bonjour, <span id="username">Utilisateur</span></h3>
-                <p class="user-role" id="userCurrentRole">Rôle actuel : Non défini</p>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-leaf"></i> EcoRide</h1>
+            <p>Personnalisez votre expérience de covoiturage écologique</p>
+            <div class="eco-icon">
+                <i class="fas fa-car"></i>
             </div>
-            
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="#" class="active" data-section="dashboard">Tableau de bord</a></li>
-                    <li><a href="#" data-section="role-select">Choisir mon rôle</a></li>
-                    <li><a href="#" data-section="my-trips">Mes trajets</a></li>
-                    <li><a href="#" data-section="profile">Mon profil</a></li>
-                    <li><a href="#" data-section="messages">Messages</a></li>
-                    <li><a href="#" data-section="eco-impact">Impact écologique</a></li>
-                </ul>
-            </nav>
-            
-            <div class="logout-section">
-                <a href="#" class="logout-btn">Déconnexion</a>
-            </div>
-        </div>
+        </header>
         
-        <div class="main-content">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="content-section active">
-                <h2>Tableau de bord</h2>
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <h3>5</h3>
-                        <p>Trajets effectués</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>2.7 kg</h3>
-                        <p>CO2 économisé</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>35 €</h3>
-                        <p>Économies réalisées</p>
-                    </div>
+        <div class="profile-container">
+            <div class="tab-container">
+                <div class="tab active" onclick="openTab(0)">
+                    <i class="fas fa-user"></i> Profil
                 </div>
-                
-                <div class="upcoming-trips">
-                    <h3>Prochains trajets</h3>
-                    <div class="trip-card">
-                        <div class="trip-date">Lun. 17 Mars</div>
-                        <div class="trip-route">
-                            <span class="trip-time">08:30</span>
-                            <span class="trip-from">Paris</span>
-                            <span class="trip-to">Lyon</span>
+                <div class="tab" onclick="openTab(1)">
+                    <i class="fas fa-car-side"></i> Véhicules
+                </div>
+                <div class="tab" onclick="openTab(2)">
+                    <i class="fas fa-sliders-h"></i> Préférences
+                </div>
+                <div class="tab-slider"></div>
+            </div>
+            
+            <!-- Onglet Profil -->
+            <div id="tab-0" class="tabcontent" style="display: block;">
+                <h2><i class="fas fa-user-circle"></i> Votre Profil</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="nom">Nom complet</label>
+                        <input type="text" id="nom" name="nom" placeholder="Ex: Jean Dupont" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Ex: jean.dupont@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="text" id="telephone" name="telephone" placeholder="Ex: 06 12 34 56 78" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="typeProfil">Comment souhaitez-vous utiliser EcoRide ?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="typeProfil" value="passager" onchange="toggleVehiculeTab()">
+                                <span class="radio-label"><i class="fas fa-walking"></i> Comme passager</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="typeProfil" value="chauffeur" onchange="toggleVehiculeTab()">
+                                <span class="radio-label"><i class="fas fa-car"></i> Comme chauffeur</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="typeProfil" value="les_deux" checked onchange="toggleVehiculeTab()">
+                                <span class="radio-label"><i class="fas fa-exchange-alt"></i> Les deux</span>
+                            </label>
                         </div>
-                        <div class="trip-role">Passager</div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Role Selection Section -->
-            <section id="role-select" class="content-section">
-                <h2>Choisir mon rôle</h2>
-                <p class="section-intro">Sélectionnez votre rôle pour les trajets sur notre plateforme de covoiturage écologique.</p>
-                
-                <div class="role-selection">
-                    <div class="role-card" id="driver-role">
-                        <div class="role-icon">🚗</div>
-                        <h3>Chauffeur</h3>
-                        <p>Proposez des trajets avec votre véhicule et contribuez à réduire l'empreinte carbone tout en partageant les frais.</p>
-                        <button class="role-btn" data-role="driver">Choisir</button>
                     </div>
                     
-                    <div class="role-card" id="passenger-role">
-                        <div class="role-icon">👥</div>
-                        <h3>Passager</h3>
-                        <p>Recherchez et réservez des trajets proposés par d'autres utilisateurs pour voyager de manière économique et écologique.</p>
-                        <button class="role-btn" data-role="passenger">Choisir</button>
-                    </div>
-                    
-                    <div class="role-card" id="both-role">
-                        <div class="role-icon">🔄</div>
-                        <h3>Les deux</h3>
-                        <p>Alternez entre les rôles de chauffeur et de passager selon vos besoins et disponibilités.</p>
-                        <button class="role-btn" data-role="both">Choisir</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer mon profil
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Onglet Véhicules -->
+            <div id="tab-1" class="tabcontent">
+                <h2><i class="fas fa-car-alt"></i> Mes Véhicules</h2>
+                <p id="vehiculeTabInfo" class="hidden">Vous devez être chauffeur ou les deux pour ajouter des véhicules.</p>
+                
+                <button id="addVehicleBtn" class="btn btn-secondary add-vehicle-btn" onclick="addVehiculeForm()">
+                    <i class="fas fa-plus-circle"></i> Ajouter un véhicule
+                </button>
+                
+                <div id="vehiculesContainer">
+                    <!-- Les véhicules seront ajoutés ici -->
                 </div>
                 
-                <div class="current-role-info">
-                    <p>Votre rôle actuel : <strong id="currentRoleDisplay">Non défini</strong></p>
+                <div id="vehiculeFormTemplate" class="vehicle-container hidden">
+                    <button class="delete-vehicle">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="vehicle-header">
+                        <div class="vehicle-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <h3>Détails du véhicule</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="immatriculation">Plaque d'immatriculation</label>
+                        <input type="text" class="immatriculation" name="immatriculation" placeholder="Ex: AB-123-CD" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dateImmatriculation">Date d'immatriculation</label>
+                        <input type="date" class="dateImmatriculation" name="dateImmatriculation" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="marque">Marque et modèle</label>
+                        <input type="text" class="marque" name="marque" placeholder="Ex: Renault ZOE" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="couleur">Couleur</label>
+                        <input type="text" class="couleur" name="couleur" placeholder="Ex: Bleu marine" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nbPlaces">Nombre de places disponibles</label>
+                        <input type="number" class="nbPlaces" name="nbPlaces" min="1" max="8" value="4" required>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary saveVehicleBtn">
+                        <i class="fas fa-check-circle"></i> Valider ce véhicule
+                    </button>
                 </div>
-            </section>
+            </div>
             
-            <!-- Other sections (placeholders) -->
-            <section id="my-trips" class="content-section">
-                <h2>Mes trajets</h2>
-                <p>Ici vous pourrez consulter l'historique de vos trajets et gérer vos réservations.</p>
-            </section>
-            
-            <section id="profile" class="content-section">
-                <h2>Mon profil</h2>
-                <p>Ici vous pourrez modifier vos informations personnelles et préférences.</p>
-            </section>
-            
-            <section id="messages" class="content-section">
-                <h2>Messages</h2>
-                <p>Ici vous pourrez consulter vos messages avec d'autres utilisateurs.</p>
-            </section>
-            
-            <section id="eco-impact" class="content-section">
-                <h2>Impact écologique</h2>
-                <p>Ici vous pourrez visualiser votre contribution écologique grâce au covoiturage.</p>
-            </section>
+            <!-- Onglet Préférences -->
+            <div id="tab-2" class="tabcontent">
+                <h2><i class="fas fa-heart"></i> Mes Préférences</h2>
+                <form id="preferencesForm">
+                    <div class="preference-card">
+                        <div class="preference-title">Acceptez-vous les fumeurs ?</div>
+                        <div class="toggle-container">
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="fumeur" name="fumeur">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label" id="fumeurLabel">Non, je préfère les trajets sans fumeurs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-card">
+                        <div class="preference-title">Acceptez-vous les animaux ?</div>
+                        <div class="toggle-container">
+                            <label class="preference-toggle">
+                                <input type="checkbox" id="animaux" name="animaux">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label" id="animauxLabel">Non, je préfère voyager sans animaux</span>
+                        </div>
+                    </div>
+                    
+                    <div class="preference-card">
+                        <div class="preference-title">Vos préférences de voyage</div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="musique" name="musique">
+                                <span class="checkbox-label"><i class="fas fa-music"></i> Musique</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="discussion" name="discussion">
+                                <span class="checkbox-label"><i class="fas fa-comments"></i> Discussion</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="calme" name="calme">
+                                <span class="checkbox-label"><i class="fas fa-volume-mute"></i> Calme</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="ecologique" name="ecologique" checked>
+                                <span class="checkbox-label"><i class="fas fa-leaf"></i> Éco-conduite</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-center animate-pulse">
+                        <i class="fas fa-check-circle"></i> Enregistrer mes préférences
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
+    <div id="successMessage" class="success-message hidden">
+        <i class="fas fa-check-circle"></i>
+        <span id="successText">Enregistré avec succès !</span>
+    </div>
+
     <script>
-        // Navigation
-        document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all links and sections
-                document.querySelectorAll('.sidebar-nav a').forEach(el => el.classList.remove('active'));
-                document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-                
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Show selected section
-                const sectionId = this.getAttribute('data-section');
-                document.getElementById(sectionId).classList.add('active');
+        // Initialisation
+        document.addEventListener("DOMContentLoaded", function() {
+            updateTabSlider(0);
+            toggleVehiculeTab();
+            
+            // Initialiser les événements pour les toggles
+            document.getElementById('fumeur').addEventListener('change', function() {
+                document.getElementById('fumeurLabel').textContent = this.checked ? 
+                    "Oui, j'accepte les fumeurs" : 
+                    "Non, je préfère les trajets sans fumeurs";
+            });
+            
+            document.getElementById('animaux').addEventListener('change', function() {
+                document.getElementById('animauxLabel').textContent = this.checked ? 
+                    "Oui, j'accepte les animaux" : 
+                    "Non, je préfère voyager sans animaux";
             });
         });
         
-        // Role selection
-        document.querySelectorAll('.role-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const role = this.getAttribute('data-role');
-                let roleText = '';
-                
-                switch(role) {
-                    case 'driver':
-                        roleText = 'Chauffeur';
-                        break;
-                    case 'passenger':
-                        roleText = 'Passager';
-                        break;
-                    case 'both':
-                        roleText = 'Chauffeur et Passager';
-                        break;
+        // Fonction pour gérer les onglets
+        function openTab(tabIndex) {
+            // Cacher tous les contenus d'onglets
+            var tabcontents = document.getElementsByClassName("tabcontent");
+            for (var i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].style.display = "none";
+            }
+            
+            // Désactiver tous les onglets
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Afficher l'onglet sélectionné
+            document.getElementById("tab-" + tabIndex).style.display = "block";
+            document.getElementsByClassName("tab")[tabIndex].classList.add("active");
+            
+            // Mettre à jour le slider sous les onglets
+            updateTabSlider(tabIndex);
+        }
+        
+        // Mise à jour du slider sous les onglets
+        function updateTabSlider(tabIndex) {
+            var tabs = document.getElementsByClassName("tab");
+            var tabSlider = document.querySelector(".tab-slider");
+            var activeTab = tabs[tabIndex];
+            
+            // Positionner le slider sous l'onglet actif
+            tabSlider.style.width = (100 / tabs.length) + "%";
+            tabSlider.style.left = (tabIndex * (100 / tabs.length)) + "%";
+        }
+        
+        // Gérer l'affichage de l'onglet véhicule en fonction du type de profil
+        function toggleVehiculeTab() {
+            var profilType;
+            var radioButtons = document.getElementsByName("typeProfil");
+            
+            for (var i = 0; i < radioButtons.length; i++) {
+                if (radioButtons[i].checked) {
+                    profilType = radioButtons[i].value;
+                    break;
                 }
-                
-                document.getElementById('currentRoleDisplay').textContent = roleText;
-                document.getElementById('userCurrentRole').textContent = 'Rôle actuel : ' + roleText;
-                
-                // Remove selected class from all role cards
-                document.querySelectorAll('.role-card').forEach(card => card.classList.remove('selected'));
-                
-                // Add selected class to the chosen role card
-                document.getElementById(role + '-role').classList.add('selected');
-                
-                alert('Vous avez choisi le rôle : ' + roleText);
+            }
+            
+            var vehiculeTab = document.getElementsByClassName("tab")[1];
+            var vehiculeTabInfo = document.getElementById("vehiculeTabInfo");
+            var addVehicleBtn = document.getElementById("addVehicleBtn");
+            var vehiculesContainer = document.getElementById("vehiculesContainer");
+            
+            if (profilType === "passager") {
+                vehiculeTab.style.opacity = "0.5";
+                vehiculeTab.style.pointerEvents = "none";
+                vehiculeTabInfo.classList.remove("hidden");
+                addVehicleBtn.classList.add("hidden");
+                vehiculesContainer.classList.add("hidden");
+            } else {
+                vehiculeTab.style.opacity = "1";
+                vehiculeTab.style.pointerEvents = "auto";
+                vehiculeTabInfo.classList.add("hidden");
+                addVehicleBtn.classList.remove("hidden");
+                vehiculesContainer.classList.remove("hidden");
+            }
+        }
+        
+        // Ajouter un formulaire de véhicule
+        let vehicleCount = 0;
+        function addVehiculeForm() {
+            vehicleCount++;
+            const template = document.getElementById("vehiculeFormTemplate");
+            const vehiculesContainer = document.getElementById("vehiculesContainer");
+            
+            const newVehicle = template.cloneNode(true);
+            newVehicle.id = "vehicle-" + vehicleCount;
+            newVehicle.classList.remove("hidden");
+            
+            // Mettre à jour les ID des champs
+            const inputs = newVehicle.querySelectorAll("input");
+            inputs.forEach(input => {
+                input.id = input.className + "-" + vehicleCount;
             });
+            
+            // Configurer le bouton de suppression
+            const deleteBtn = newVehicle.querySelector(".delete-vehicle");
+            deleteBtn.onclick = function() {
+                newVehicle.style.opacity = "0";
+                setTimeout(() => {
+                    vehiculesContainer.removeChild(newVehicle);
+                }, 300);
+            };
+            
+            // Configurer le bouton de sauvegarde
+            const saveBtn = newVehicle.querySelector(".saveVehicleBtn");
+            saveBtn.onclick = function() {
+                showSuccessMessage("Véhicule enregistré avec succès !");
+            };
+            
+            // Ajouter dynamiquement des icônes différentes pour chaque véhicule
+            const vehicleIcons = [
+                "fa-car", "fa-car-side", "fa-truck", "fa-shuttle-van", "fa-motorcycle"
+            ];
+            const randomIcon = vehicleIcons[Math.floor(Math.random() * vehicleIcons.length)];
+            const iconElement = newVehicle.querySelector(".vehicle-icon i");
+            iconElement.className = "fas " + randomIcon;
+            
+            vehiculesContainer.appendChild(newVehicle);
+        }
+        
+        // Afficher un message de succès
+        function showSuccessMessage(message) {
+            const successMessage = document.getElementById("successMessage");
+            const successText = document.getElementById("successText");
+            
+            successText.textContent = message;
+            successMessage.classList.remove("hidden");
+            
+            setTimeout(() => {
+                successMessage.classList.add("hidden");
+            }, 3500);
+        }
+        
+        // Gestion des formulaires
+        document.getElementById("profileForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            showSuccessMessage("Profil enregistré avec succès !");
+        });
+        
+        document.getElementById("preferencesForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            showSuccessMessage("Préférences enregistrées avec succès !");
         });
     </script>
 </body>
