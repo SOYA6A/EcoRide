@@ -1,182 +1,261 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const path = require('path');
-const session = require('express-session');
-const app = express();
-const port = 3000;
-
-// Connexion à MongoDB
-mongoose.connect('mongodb://localhost:27017/ecoride', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Connexion à MongoDB réussie'))
-.catch(err => console.error('Erreur de connexion à MongoDB:', err));
-
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'votre_clé_secrète',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 3600000 } // 1 heure
-}));
-
-// Modèle d'utilisateur
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
-
-const User = mongoose.model('User', userSchema);
-
-// Modèle de trajet
-const tripSchema = new mongoose.Schema({
-  departure: { type: String, required: true },
-  arrival: { type: String, required: true },
-  date: { type: Date, required: true },
-  time: { type: String, required: true },
-  seats: { type: Number, required: true },
-  price: { type: Number, required: true },
-  vehicleType: { type: String, required: true },
-  co2Emissions: { type: Number, required: true },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  options: {
-    nonSmoking: { type: Boolean, default: false },
-    petsAllowed: { type: Boolean, default: false }
+document.addEventListener('DOMContentLoaded', function() {
+  // Gestion des onglets de connexion/inscription
+  const tabs = document.querySelectorAll('.auth-tab');
+  const forms = document.querySelectorAll('.auth-form');
+  
+  // Vérifier si nous sommes sur la page de connexion
+  if (tabs.length > 0) {
+      // Activer l'onglet correspondant à l'URL hash
+      const hash = window.location.hash || '#login';
+      activateTab(hash);
+      
+      // Ajouter des écouteurs d'événements aux onglets
+      tabs.forEach(tab => {
+          tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              activateTab(this.getAttribute('href'));
+          });
+      });
   }
-});
-
-const Trip = mongoose.model('Trip', tripSchema);
-
-// Routes d'authentification
-app.post('/api/register', async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-    
-    // Vérifier si l'utilisateur existe déjà
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Cet email ou nom d\'utilisateur est déjà utilisé' });
-    }
-    
-    // Hacher le mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
-    
-    // Créer nouvel utilisateur
-    const newUser = new User({
-      username,
-      email,
-      password: hashedPassword
-    });
-    
-    await newUser.save();
-    res.status(201).json({ message: 'Inscription réussie' });
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de l\'inscription', error: error.message });
+  
+  // Fonction pour activer un onglet
+  function activateTab(tabId) {
+      // Désactiver tous les onglets et formulaires
+      tabs.forEach(tab => tab.classList.remove('active'));
+      forms.forEach(form => form.classList.remove('active'));
+      
+      // Activer l'onglet et le formulaire sélectionnés
+      document.querySelector(`a[href="${tabId}"]`)?.classList.add('active');
+      document.querySelector(tabId)?.classList.add('active');
+      
+      // Mettre à jour le hash de l'URL
+      window.location.hash = tabId;
   }
-});
-
-app.post('/api/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    
-    // Trouver l'utilisateur
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
-    }
-    
-    // Vérifier le mot de passe
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
-    }
-    
-    // Créer une session
-    req.session.userId = user._id;
-    req.session.username = user.username;
-    
-    res.status(200).json({ 
-      message: 'Connexion réussie',
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email
+  
+  // Récupérer les formulaires
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const messageContainer = document.getElementById('message-container');
+  
+  // Gestion du formulaire de connexion
+  if (loginForm) {
+      loginForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const email = document.getElementById('login-email').value;
+          const password = document.getElementById('login-password').value;
+          
+          try {
+              const response = await fetch('/api/login', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ email, password })
+              });
+              
+              const data = await response.json();
+              
+              if (response.ok) {
+                  // Afficher un message de succès
+                  showMessage('success', 'Connexion réussie! Redirection...');
+                  
+                  // Stocker les informations d'utilisateur dans localStorage
+                  localStorage.setItem('user', JSON.stringify(data.user));
+                  
+                  // Redirection vers la page d'accueil après 1 seconde
+                  setTimeout(() => {
+                      window.location.href = 'index.html';
+                  }, 1000);
+              } else {
+                  // Afficher un message d'erreur
+                  showMessage('error', data.message || 'Erreur de connexion');
+              }
+          } catch (error) {
+              showMessage('error', 'Erreur de communication avec le serveur');
+              console.error('Erreur:', error);
+          }
+      });
+  }
+  
+  // Gestion du formulaire d'inscription
+  if (registerForm) {
+      registerForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const username = document.getElementById('register-username').value;
+          const email = document.getElementById('register-email').value;
+          const password = document.getElementById('register-password').value;
+          const confirmPassword = document.getElementById('register-confirm-password').value;
+          
+          // Vérifier si les mots de passe correspondent
+          if (password !== confirmPassword) {
+              showMessage('error', 'Les mots de passe ne correspondent pas');
+              return;
+          }
+          
+          try {
+              const response = await fetch('/api/register', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ username, email, password })
+              });
+              
+              const data = await response.json();
+              
+              if (response.ok) {
+                  // Afficher un message de succès
+                  showMessage('success', 'Inscription réussie! Vous pouvez maintenant vous connecter.');
+                  
+                  // Redirection vers la page de connexion après 2 secondes
+                  setTimeout(() => {
+                      window.location.href = 'connexion.html#login';
+                      activateTab('#login');
+                  }, 2000);
+              } else {
+                  // Afficher un message d'erreur
+                  showMessage('error', data.message || 'Erreur lors de l\'inscription');
+              }
+          } catch (error) {
+              showMessage('error', 'Erreur de communication avec le serveur');
+              console.error('Erreur:', error);
+          }
+      });
+  }
+  
+  // Fonction pour afficher des messages à l'utilisateur
+  function showMessage(type, message) {
+      if (messageContainer) {
+          messageContainer.textContent = message;
+          messageContainer.className = `message ${type}`;
+          messageContainer.style.display = 'block';
+          
+          // Faire disparaître le message après 5 secondes
+          setTimeout(() => {
+              messageContainer.style.display = 'none';
+          }, 5000);
       }
-    });
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la connexion', error: error.message });
   }
-});
-
-app.get('/api/logout', (req, res) => {
-  req.session.destroy();
-  res.status(200).json({ message: 'Déconnexion réussie' });
-});
-
-// Middleware d'authentification
-const isAuthenticated = (req, res, next) => {
-  if (req.session.userId) {
-    next();
-  } else {
-    res.status(401).json({ message: 'Veuillez vous connecter pour accéder à cette ressource' });
+  
+  // Vérifier si l'utilisateur est connecté au chargement de la page
+  function checkAuthStatus() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const loginBtn = document.querySelector('.btn-connexion');
+      
+      if (user && loginBtn) {
+          loginBtn.textContent = 'Mon compte';
+          loginBtn.href = 'profile.html';
+          
+          // Ajouter un bouton de déconnexion au menu si l'utilisateur est connecté
+          if (!document.querySelector('.btn-deconnexion')) {
+              const logoutLi = document.createElement('li');
+              const logoutBtn = document.createElement('a');
+              logoutBtn.textContent = 'Déconnexion';
+              logoutBtn.href = '#';
+              logoutBtn.className = 'btn-deconnexion';
+              logoutBtn.addEventListener('click', logout);
+              logoutLi.appendChild(logoutBtn);
+              
+              document.querySelector('.menu').appendChild(logoutLi);
+          }
+      }
   }
-};
-
-// Routes pour les trajets
-app.post('/api/trips', isAuthenticated, async (req, res) => {
-  try {
-    const { departure, arrival, date, time, seats, price, vehicleType, co2Emissions, options } = req.body;
-    
-    const newTrip = new Trip({
-      departure,
-      arrival,
-      date,
-      time,
-      seats,
-      price,
-      vehicleType,
-      co2Emissions,
-      createdBy: req.session.userId,
-      options
-    });
-    
-    await newTrip.save();
-    res.status(201).json({ message: 'Trajet créé avec succès', trip: newTrip });
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la création du trajet', error: error.message });
+  
+  // Fonction de déconnexion
+  async function logout(e) {
+      e.preventDefault();
+      
+      try {
+          const response = await fetch('/api/logout');
+          
+          // Supprimer les informations d'utilisateur du localStorage
+          localStorage.removeItem('user');
+          
+          // Rediriger vers la page d'accueil
+          window.location.href = 'index.html';
+      } catch (error) {
+          console.error('Erreur lors de la déconnexion:', error);
+      }
   }
-});
-
-app.get('/api/trips', async (req, res) => {
-  try {
-    const { departure, arrival, date, passengers } = req.query;
-    
-    const query = {};
-    if (departure) query.departure = new RegExp(departure, 'i');
-    if (arrival) query.arrival = new RegExp(arrival, 'i');
-    if (date) query.date = { $gte: new Date(date) };
-    if (passengers) query.seats = { $gte: parseInt(passengers) };
-    
-    const trips = await Trip.find(query).populate('createdBy', 'username email');
-    res.status(200).json(trips);
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la récupération des trajets', error: error.message });
+  
+  // Vérifier le statut d'authentification au chargement de la page
+  checkAuthStatus();
+  
+  // Ajouter du CSS pour les messages
+  const style = document.createElement('style');
+  style.textContent = `
+  .message {
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      text-align: center;
   }
-});
-
-// Route par défaut pour servir l'index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Démarrer le serveur
-app.listen(port, () => {
-  console.log(`Serveur en cours d'exécution à http://localhost:${port}`);
+  .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+  }
+  .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+  }
+  .auth-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .auth-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+  }
+  .auth-tab {
+      padding: 10px 15px;
+      margin-right: 10px;
+      cursor: pointer;
+      color: #555;
+      text-decoration: none;
+  }
+  .auth-tab.active {
+      color: #4CAF50;
+      border-bottom: 2px solid #4CAF50;
+  }
+  .auth-form {
+      display: none;
+  }
+  .auth-form.active {
+      display: block;
+  }
+  .form-group {
+      margin-bottom: 15px;
+  }
+  .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+  }
+  .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+  }
+  .forgot-password {
+      color: #777;
+      text-decoration: none;
+      font-size: 0.9em;
+      display: inline-block;
+      margin-top: 5px;
+  }
+  .forgot-password:hover {
+      text-decoration: underline;
+  }
+  `;
+  document.head.appendChild(style);
 });

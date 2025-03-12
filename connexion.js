@@ -115,3 +115,5 @@ document.addEventListener('DOMContentLoaded', function() {
     
     checkAuthStatus();
   });
+
+  app.use(express.static(path.join(__dirname, 'public')));
