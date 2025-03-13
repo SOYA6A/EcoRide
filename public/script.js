@@ -349,4 +349,4 @@ function ajouterCarteTrajet(covoiturageData) {
     }
 }
 
-
+//implementer un test de connection avec mon fichier html
