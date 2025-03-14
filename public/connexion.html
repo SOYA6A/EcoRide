@@ -1,219 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - EcoRide</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .auth-container {
-            max-width: 500px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 2px solid #ddd;
-        }
-        
-        .tab.active {
-            border-bottom: 2px solid #4CAF50;
-            font-weight: bold;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        button:hover {
-            background-color: #45a049;
-        }
-        
-        .message {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-        }
-        
-        .success {
-            background-color: #dff0d8;
-            color: #3c763d;
-        }
-        
-        .error {
-            background-color: #f2dede;
-            color: #a94442;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav> 
-            <div class="logo">Eco-Ride</div>
-            <ul class="menu">
-                <li><a href="index.html#accueil">Accueil</a></li>
-                <li><a href="index.html#covoiturage">Covoiturage</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="connexion.html" class="btn-connexion">Connexion</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <div class="auth-container">
-            <div id="message-container" style="display: none;" class="message"></div>
-            
-            <div class="tabs">
-                <div class="tab active" data-tab="login">Connexion</div>
-                <div class="tab" data-tab="register">Inscription</div>
-            </div>
-            
-            <div id="login" class="tab-content active">
-                <h2>Connectez-vous à votre compte</h2>
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="login-password">Mot de passe</label>
-                        <input type="password" id="login-password" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <button type="submit">Se connecter</button>
-                    </div>
-                    
-                    <p><a href="#" id="forgot-password">Mot de passe oublié?</a></p>
-                </form>
-            </div>
-            
-            <div id="register" class="tab-content">
-                <h2>Créez un compte</h2>
-                <form id="register-form">
-                    <div class="form-group">
-                        <label for="register-username">Nom d'utilisateur</label>
-                        <input type="text" id="register-username" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="register-email">Email</label>
-                        <input type="email" id="register-email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="register-password">Mot de passe</label>
-                        <input type="password" id="register-password" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="register-confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="register-confirm-password" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <button type="submit">S'inscrire</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </main>
-    
-    <script>
-        // Script pour gérer les onglets
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            // Vérifier si un hash est présent dans l'URL
-            const hash = window.location.hash.substring(1);
-            if (hash === 'register' || hash === 'login') {
-                // Activer l'onglet correspondant
-                tabs.forEach(tab => {
-                    if (tab.dataset.tab === hash) {
-                        tab.classList.add('active');
-                    } else {
-                        tab.classList.remove('active');
-                    }
-                });
-                
-                tabContents.forEach(content => {
-                    if (content.id === hash) {
-                        content.classList.add('active');
-                    } else {
-                        content.classList.remove('active');
-                    }
-                });
-            }
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
-                    
-                    // Mettre à jour l'URL
-                    window.location.hash = tabId;
-                    
-                    // Activer l'onglet cliqué
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Afficher le contenu correspondant
-                    tabContents.forEach(content => {
-                        if (content.id === tabId) {
-                            content.classList.add('active');
-                        } else {
-                            content.classList.remove('active');
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-    
-    <script src="app.js"></script>
+  <div class="auth-container">
+    <h1>Connexion</h1>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Mot de passe</label>
+        <input type="password" id="login-password" required>
+      </div>
+      <button type="submit" class="btn-primary">Se connecter</button>
+    </form>
+    <p>Pas encore de compte ? <a href="inscription.html">Inscrivez-vous</a></p>
+  </div>
+  <div id="message-container"></div>
+  <script src="script.js"></script>
 </body>
 </html>
