@@ -87,3 +87,16 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+
+
+//pour ajouter un évenement au bouton "créer un covoiturage"
+document.addEventListener('DOMContentLoaded', function() {
+  const btnCreerCovoiturage = document.getElementById('creer-covoiturage');
+  
+  if (btnCreerCovoiturage) {
+      btnCreerCovoiturage.addEventListener('click', function() {
+          window.location.href = 'creer-covoiturage.html';
+      });
+  }
+});
