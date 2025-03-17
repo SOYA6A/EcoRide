@@ -58,3 +58,38 @@ document.addEventListener('DOMContentLoaded', function () {
         `).join('');
     }
 });
+
+
+
+
+function displayCovoiturages() {
+    const covoiturages = JSON.parse(localStorage.getItem('covoiturages')) || [];
+    const covoiturageList = document.getElementById('covoiturageList');
+
+    if (covoiturages.length === 0) {
+        covoiturageList.innerHTML = '<p>Aucun covoiturage disponible.</p>';
+        return;
+    }
+
+    covoiturageList.innerHTML = covoiturages.map(covoiturage => `
+        <div class="trajet-card">
+            <div class="trajet-header">
+                <h3>${covoiturage.depart} → ${covoiturage.arrivee}</h3>
+                <span class="eco-badge">${covoiturage.vehicule}</span>
+            </div>
+            <div class="trajet-details">
+                <p><strong>Date:</strong> ${covoiturage.date}</p>
+                <p><strong>Heure:</strong> ${covoiturage.heure}</p>
+                <p><strong>Places:</strong> ${covoiturage.places}</p>
+                <p><strong>Véhicule:</strong> ${covoiturage.vehicule}</p>
+            </div>
+            <button class="btn-secondary">Réserver</button>
+        </div>
+    `).join('');
+}
+
+
+document.getElementById('toggle-filters').addEventListener('click', function () {
+    const filtersContent = document.getElementById('advanced-filters-content');
+    filtersContent.classList.toggle('hidden');
+});
