@@ -3,310 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un Covoiturage - EcoRide</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Ajout d'un style spécifique pour cette page -->
-    <style>
-        .create-ride-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .form-section {
-            margin-bottom: 2rem;
-        }
-        
-        .form-section h3 {
-            border-bottom: 2px solid #4CAF50;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group {
-            flex: 1 1 300px;
-        }
-        
-        .vehicle-info {
-            padding: 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-        
-        .fee-calculator {
-            background-color: #e9f5e9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .fee-result {
-            font-weight: bold;
-            color: #4CAF50;
-            font-size: 1.2rem;
-            text-align: center;
-            margin-top: 1rem;
-        }
-    </style>
+    <title>EcoRide - Créer un covoiturage</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="creer-covoiturage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <!-- logo et nom de l'entreprise -->
-            <div class="logo">Eco-Ride</div>
-            <!-- menu de navigation -->
-            <ul class="menu">
-                <li><a href="index.html#accueil">Accueil</a></li>
-                <li><a href="index.html#covoiturage">Covoiturage</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="connexion.html" class="btn-connexion">Connexion</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-leaf"></i> EcoRide</h1>
+            <p>Créez un covoiturage écologique</p>
+        </header>
 
-    <main>
-        <div class="create-ride-container">
-            <h1>Créer un covoiturage</h1>
-            <p>Proposez votre trajet et contribuez à réduire l'empreinte carbone tout en partageant vos frais de déplacement.</p>
-            
-            <form id="createRideForm">
-                <!-- Section Itinéraire -->
-                <div class="form-section">
-                    <h3>Itinéraire</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="departure">Lieu de départ</label>
-                            <input type="text" id="departure" name="departure" required placeholder="Ex: Paris">
-                        </div>
-                        <div class="form-group">
-                            <label for="arrival">Lieu d'arrivée</label>
-                            <input type="text" id="arrival" name="arrival" required placeholder="Ex: Lyon">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="date">Date du trajet</label>
-                            <input type="date" id="date" name="date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="time">Heure de départ</label>
-                            <input type="time" id="time" name="time" required>
-                        </div>
-                    </div>
-                    
+        <main>
+            <section class="form-section">
+                <h2>Créer un covoiturage</h2>
+                <form id="covoiturageForm">
                     <div class="form-group">
-                        <label for="stops">Étapes intermédiaires (facultatif)</label>
-                        <input type="text" id="stops" name="stops" placeholder="Ex: Dijon, Mâcon">
+                        <label for="depart">Lieu de départ</label>
+                        <input type="text" id="depart" name="depart" placeholder="Ex: Paris" required>
                     </div>
-                </div>
-                
-                <!-- Section Véhicule -->
-                <div class="form-section">
-                    <h3>Informations sur le véhicule</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="vehicle-type">Type de véhicule</label>
-                            <select id="vehicle-type" name="vehicle-type" required>
-                                <option value="">Sélectionnez...</option>
-                                <option value="electric">Électrique</option>
-                                <option value="hybrid">Hybride</option>
-                                <option value="petrol">Essence</option>
-                                <option value="diesel">Diesel</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="vehicle-model">Modèle du véhicule</label>
-                            <input type="text" id="vehicle-model" name="vehicle-model" required placeholder="Ex: Renault Zoe">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="vehicle-seats">Places disponibles</label>
-                            <select id="vehicle-seats" name="vehicle-seats" required>
-                                <option value="1">1 place</option>
-                                <option value="2">2 places</option>
-                                <option value="3">3 places</option>
-                                <option value="4">4 places</option>
-                                <option value="5">5 places</option>
-                                <option value="6">6+ places</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="consumption">Consommation moyenne (L/100km ou kWh/100km)</label>
-                            <input type="number" id="consumption" name="consumption" step="0.1" min="0" required>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Section Préférences -->
-                <div class="form-section">
-                    <h3>Préférences</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="non-smoking" name="non-smoking">
-                                <label for="non-smoking">Trajet non-fumeur</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="pets-allowed" name="pets-allowed">
-                                <label for="pets-allowed">Animaux acceptés</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="music" name="music">
-                                <label for="music">Musique pendant le trajet</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="luggage">Espace bagages</label>
-                            <select id="luggage" name="luggage">
-                                <option value="small">Petit (sac à dos)</option>
-                                <option value="medium" selected>Moyen (valise cabine)</option>
-                                <option value="large">Grand (grande valise)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Section Tarification -->
-                <div class="form-section">
-                    <h3>Tarification</h3>
-                    <p>Définissez le prix par passager pour ce trajet.</p>
-                    
-                    <div class="form-group">
-                        <label for="price">Prix par passager (€)</label>
-                        <input type="number" id="price" name="price" min="1" step="0.5" required>
-                    </div>
-                    
-                    <div class="fee-calculator">
-                        <h4>Calculateur de prix recommandé</h4>
-                        <p>Notre calculateur estime un prix équitable basé sur la distance et le type de véhicule :</p>
-                        <button type="button" id="calculate-price" class="btn-secondary">Calculer prix recommandé</button>
-                        <div class="fee-result" id="recommended-price"></div>
-                    </div>
-                </div>
-                
-                <!-- Section Description & Notes -->
-                <div class="form-section">
-                    <h3>Description & notes</h3>
-                    <div class="form-group">
-                        <label for="description">Informations supplémentaires (facultatif)</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Précisez tout détail utile pour les passagers..."></textarea>
-                    </div>
-                </div>
-                
-                <div class="action-buttons">
-                    <button type="button" class="btn-secondary" onclick="window.location.href='index.html'">Annuler</button>
-                    <button type="submit" class="btn-primary">Publier le covoiturage</button>
-                </div>
-            </form>
-        </div>
-    </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Calculateur de prix recommandé
-            const calculatePriceBtn = document.getElementById('calculate-price');
-            const recommendedPriceDiv = document.getElementById('recommended-price');
-            
-            calculatePriceBtn.addEventListener('click', function() {
-                const departure = document.getElementById('departure').value;
-                const arrival = document.getElementById('arrival').value;
-                const vehicleType = document.getElementById('vehicle-type').value;
-                
-                if (!departure || !arrival || !vehicleType) {
-                    alert("Veuillez d'abord remplir le lieu de départ, d'arrivée et le type de véhicule.");
-                    return;
-                }
-                
-                // Simulation de calcul - Dans une vraie application, 
-                // vous pourriez utiliser une API de calcul de distance
-                let basePrice = 0;
-                
-                // Simulation basique avec quelques villes françaises
-                const cities = {
-                    'paris': { lat: 48.8566, lng: 2.3522 },
-                    'lyon': { lat: 45.7578, lng: 4.8320 },
-                    'marseille': { lat: 43.2965, lng: 5.3698 },
-                    'bordeaux': { lat: 44.8378, lng: -0.5792 },
-                    'nice': { lat: 43.7102, lng: 7.2620 }
-                };
-                
-                // Fonction simplifiée pour calculer la distance
-                function calculateDistance(city1, city2) {
-                    const departureCity = city1.toLowerCase();
-                    const arrivalCity = city2.toLowerCase();
-                    
-                    if (cities[departureCity] && cities[arrivalCity]) {
-                        // Calcul très simplifié de la distance à vol d'oiseau
-                        const lat1 = cities[departureCity].lat;
-                        const lng1 = cities[departureCity].lng;
-                        const lat2 = cities[arrivalCity].lat;
-                        const lng2 = cities[arrivalCity].lng;
-                        
-                        return Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2)) * 111; // approximation en kilomètres
-                    } else {
-                        // Pour des villes non répertoriées, utiliser une estimation
-                        return 300; // distance par défaut en km
-                    }
-                }
-                
-                const estimatedDistance = calculateDistance(departure, arrival);
-                
-                // Prix de base selon la distance
-                basePrice = estimatedDistance * 0.07; // 7 centimes par km par passager
-                
-                // Ajustement selon le type de véhicule
-                switch(vehicleType) {
-                    case 'electric':
-                        basePrice *= 0.9; // 10% moins cher
-                        break;
-                    case 'hybrid':
-                        basePrice *= 0.95; // 5% moins cher
-                        break;
-                    case 'diesel':
-                        basePrice *= 1.1; // 10% plus cher
-                        break;
-                }
-                
-                // Arrondi à 0.5€ près
-                basePrice = Math.round(basePrice * 2) / 2;
-                
-                // Mise à jour de l'interface
-                recommendedPriceDiv.textContent = basePrice.toFixed(2) + " € par passager";
-                document.getElementById('price').value = basePrice;
-            });
-            
-            // Soumission du formulaire
-            const createRideForm = document.getElementById('createRideForm');
-            
-            createRideForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // Ici, vous intégreriez le code pour envoyer les données à votre backend
-                
-                // Simulation d'envoi
-                alert("Votre covoiturage a été créé avec succès ! Vous allez être redirigé vers la page d'accueil.");
-                window.location.href = 'index.html';
-            });
-        });
-    </script>
+                    <div class="form-group">
+                        <label for="arrivee">Lieu d'arrivée</label>
+                        <input type="text" id="arrivee" name="arrivee" placeholder="Ex: Lyon" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date du trajet</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="heure">Heure de départ</label>
+                        <input type="time" id="heure" name="heure" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="places">Nombre de places disponibles</label>
+                        <input type="number" id="places" name="places" min="1" max="8" value="4" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicule">Type de véhicule</label>
+                        <select id="vehicule" name="vehicule" required>
+                            <option value="electrique">Voiture électrique</option>
+                            <option value="hybride">Voiture hybride</option>
+                            <option value="essence">Voiture essence</option>
+                            <option value="diesel">Voiture diesel</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check-circle"></i> Créer le covoiturage
+                    </button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>
