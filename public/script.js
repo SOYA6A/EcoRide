@@ -104,6 +104,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // code test
 
+// Ajouter cette route à votre fichier server.js
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur l\'API de covoiturage écologique. Utilisez /api/trajets pour accéder aux données.');
+});
+
+
+// Ajouter ceci à votre server.js
+app.use(express.static('public')); 
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('covoiturageForm');
   const covoiturageList = document.getElementById('covoiturageList');
