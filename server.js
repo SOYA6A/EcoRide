@@ -33,3 +33,13 @@ app.post('/api/trajets', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur API démarré sur http://localhost:${PORT}`);
 });
+
+
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur l\'API de covoiturage écologique. Utilisez /api/trajets pour accéder aux données.');
+});
+
+
+// Ajouter ceci à votre server.js
+app.use(express.static('public')); 
+
