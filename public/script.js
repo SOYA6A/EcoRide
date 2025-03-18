@@ -1,121 +1,107 @@
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
-    const messageContainer = document.getElementById('message-container');
-  
-    if (loginForm) {
-      loginForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-  
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-  
-        try {
-          const response = await fetch('http://localhost:3000/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-          });
-  
-          if (!response.ok) {
-            throw new Error('Erreur de connexion');
-          }
-  
-          const data = await response.json();
-          showMessage('success', 'Connexion réussie! Redirection...');
-          localStorage.setItem('user', JSON.stringify(data.user));
-  
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1000);
-        } catch (error) {
-          showMessage('error', error.message || 'Erreur de communication avec le serveur');
-          console.error('Erreur:', error);
-        }
-      });
-    }
-  
-    if (registerForm) {
-      registerForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-  
-        const username = document.getElementById('register-username').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const confirmPassword = document.getElementById('register-confirm-password').value;
-  
-        if (password !== confirmPassword) {
-          showMessage('error', 'Les mots de passe ne correspondent pas');
-          return;
-        }
-  
-        try {
-          const response = await fetch('http://localhost:3000/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-          });
-  
-          if (!response.ok) {
-            throw new Error('Erreur lors de l\'inscription');
-          }
-  
-          const data = await response.json();
-          showMessage('success', 'Inscription réussie! Vous pouvez maintenant vous connecter.');
-  
-          setTimeout(() => {
-            window.location.href = 'connexion.html#login';
-          }, 2000);
-        } catch (error) {
-          showMessage('error', error.message || 'Erreur de communication avec le serveur');
-          console.error('Erreur:', error);
-        }
-      });
-    }
-  
-    function showMessage(type, message) {
-      if (messageContainer) {
-        messageContainer.textContent = message;
-        messageContainer.className = `message ${type}`;
-        messageContainer.style.display = 'block';
-  
-        setTimeout(() => {
-          messageContainer.style.display = 'none';
-        }, 5000);
-      }
-    }
-  });
-
-
-
-//pour ajouter un évenement au bouton "créer un covoiturage"
-document.addEventListener('DOMContentLoaded', function() {
-  const btnCreerCovoiturage = document.getElementById('creer-covoiturage');
-  
-  if (btnCreerCovoiturage) {
-      btnCreerCovoiturage.addEventListener('click', function() {
-          window.location.href = 'creer-covoiturage.html';
-      });
-  }
-});
-
-
-// code test
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('covoiturageForm');
-  const covoiturageList = document.getElementById('covoiturageList');
+  // Variables globales
+  let allTrajets = []; // Stocker tous les trajets récupérés
 
-  // Afficher les covoiturages au chargement de la page
-  displayCovoiturages();
+  // Fonction pour afficher un message à l'utilisateur
+  function showMessage(type, message) {
+    const messageContainer = document.getElementById('message-container');
+    if (messageContainer) {
+      messageContainer.textContent = message;
+      messageContainer.className = `message ${type}`;
+      messageContainer.style.display = 'block';
 
-  form.addEventListener('submit', function (e) {
+      setTimeout(() => {
+        messageContainer.style.display = 'none';
+      }, 5000);
+    }
+  }
+
+  // Gestion de la connexion
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      try {
+        const response = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur de connexion');
+        }
+
+        const data = await response.json();
+        showMessage('success', 'Connexion réussie! Redirection...');
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } catch (error) {
+        showMessage('error', error.message || 'Erreur de communication avec le serveur');
+        console.error('Erreur:', error);
+      }
+    });
+  }
+
+  // Gestion de l'inscription
+  const registerForm = document.getElementById('register-form');
+  if (registerForm) {
+    registerForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('register-username').value;
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('register-confirm-password').value;
+
+      if (password !== confirmPassword) {
+        showMessage('error', 'Les mots de passe ne correspondent pas');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur lors de l\'inscription');
+        }
+
+        const data = await response.json();
+        showMessage('success', 'Inscription réussie! Vous pouvez maintenant vous connecter.');
+
+        setTimeout(() => {
+          window.location.href = 'connexion.html#login';
+        }, 2000);
+      } catch (error) {
+        showMessage('error', error.message || 'Erreur de communication avec le serveur');
+        console.error('Erreur:', error);
+      }
+    });
+  }
+
+  // Redirection vers la page de création de covoiturage
+  const btnCreerCovoiturage = document.getElementById('creer-covoiturage');
+  if (btnCreerCovoiturage) {
+    btnCreerCovoiturage.addEventListener('click', function () {
+      window.location.href = 'creer-covoiturage.html';
+    });
+  }
+
+  // Gestion de la création de covoiturage
+  const covoiturageForm = document.getElementById('covoiturageForm');
+  if (covoiturageForm) {
+    covoiturageForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
       // Récupérer les valeurs du formulaire
@@ -128,12 +114,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Créer un objet covoiturage
       const covoiturage = {
-          depart,
-          arrivee,
-          date,
-          heure,
-          places: parseInt(places),
-          vehicule
+        depart,
+        arrivee,
+        date,
+        heure,
+        places: parseInt(places),
+        vehicule,
       };
 
       // Sauvegarder le covoiturage
@@ -143,124 +129,110 @@ document.addEventListener('DOMContentLoaded', function () {
       displayCovoiturages();
 
       // Afficher un message de succès
-      alert('Covoiturage créé avec succès !');
+      showMessage('success', 'Covoiturage créé avec succès !');
 
       // Réinitialiser le formulaire
-      form.reset();
-  });
+      covoiturageForm.reset();
+    });
+  }
 
+  // Fonction pour sauvegarder un covoiturage
   function saveCovoiturage(covoiturage) {
-      let covoiturages = JSON.parse(localStorage.getItem('covoiturages')) || [];
-      covoiturages.push(covoiturage);
-      localStorage.setItem('covoiturages', JSON.stringify(covoiturages));
+    let covoiturages = JSON.parse(localStorage.getItem('covoiturages')) || [];
+    covoiturages.push(covoiturage);
+    localStorage.setItem('covoiturages', JSON.stringify(covoiturages));
   }
 
+  // Fonction pour afficher les covoiturages
   function displayCovoiturages() {
-      const covoiturages = JSON.parse(localStorage.getItem('covoiturages')) || [];
-      covoiturageList.innerHTML = covoiturages.map(covoiturage => `
-          <div class="covoiturage-item">
-              <p><strong>Départ :</strong> ${covoiturage.depart}</p>
-              <p><strong>Arrivée :</strong> ${covoiturage.arrivee}</p>
-              <p><strong>Date :</strong> ${covoiturage.date} à ${covoiturage.heure}</p>
-              <p><strong>Places disponibles :</strong> ${covoiturage.places}</p>
-              <p><strong>Véhicule :</strong> ${covoiturage.vehicule}</p>
-          </div>
-      `).join('');
-  }
-});
+    const covoiturageList = document.getElementById('covoiturageList');
+    const covoiturages = JSON.parse(localStorage.getItem('covoiturages')) || [];
 
+    if (covoiturages.length === 0) {
+      covoiturageList.innerHTML = '<p>Aucun covoiturage disponible.</p>';
+      return;
+    }
 
-
-
-
-document.getElementById('searchForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const depart = document.getElementById('depart').value;
-  const arrivee = document.getElementById('arrivée').value;
-  const date = document.getElementById('date').value;
-  const passengers = document.getElementById('passengers').value;
-
-  console.log('Recherche effectuée :', { depart, arrivee, date, passengers });
-  // Ajoutez ici la logique pour filtrer les covoiturages
-});
-
-
-
-
-
-
-
-// Récupérer les trajets depuis le backend
-async function fetchTrajets() {
-  try {
-    const response = await fetch('http://localhost:3000/api/trajets');
-    const trajets = await response.json();
-    console.log('Trajets reçus :', trajets); // Afficher les trajets dans la console
-    displayTrajets(trajets);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des trajets :', error);
-  }
-}
-
-// Afficher les trajets dans la page
-function displayTrajets(trajets) {
-  const trajetList = document.getElementById('trajets');
-  if (!trajetList) {
-    console.error('Element #trajets non trouvé dans le DOM');
-    return;
+    covoiturageList.innerHTML = covoiturages.map(covoiturage => `
+      <div class="covoiturage-item">
+        <p><strong>Départ :</strong> ${covoiturage.depart}</p>
+        <p><strong>Arrivée :</strong> ${covoiturage.arrivee}</p>
+        <p><strong>Date :</strong> ${covoiturage.date} à ${covoiturage.heure}</p>
+        <p><strong>Places disponibles :</strong> ${covoiturage.places}</p>
+        <p><strong>Véhicule :</strong> ${covoiturage.vehicule}</p>
+      </div>
+    `).join('');
   }
 
-  trajetList.innerHTML = trajets.map(trajet => `
-    <div class="trajet-item">
-      <p><strong>${trajet.depart} → ${trajet.destination}</strong></p>
-      <p>Conducteur : ${trajet.conducteur}</p>
-      <p>Places disponibles : ${trajet.placesDisponibles}</p>
-    </div>
-  `).join('');
-}
+  // Gestion de la recherche de trajets
+  const searchForm = document.getElementById('searchForm');
+  if (searchForm) {
+    searchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-// Charger les trajets au démarrage
-fetchTrajets();
+      // Récupérer les valeurs du formulaire
+      const depart = document.getElementById('depart').value.trim();
+      const arrivee = document.getElementById('arrivée').value.trim();
+      const date = document.getElementById('date').value;
 
-document.addEventListener('DOMContentLoaded', function () {
-  const trajetList = document.getElementById('trajet-list');
+      // Filtrer les trajets
+      const filteredTrajets = filterTrajets(depart, arrivee, date);
 
-  // Récupérer les trajets depuis l'API
-  async function fetchTrajets() {
-      try {
-          const response = await fetch('http://localhost:3000/api/trajets');
-          const trajets = await response.json();
-          displayTrajets(trajets);
-      } catch (error) {
-          console.error('Erreur lors de la récupération des trajets :', error);
-      }
+      // Afficher les trajets filtrés
+      displayTrajets(filteredTrajets);
+    });
   }
 
-  // Afficher les trajets dans la page
+  // Fonction pour filtrer les trajets
+  function filterTrajets(depart, arrivee, date) {
+    return allTrajets.filter(trajet => {
+      const matchesDepart = depart ? trajet.depart.toLowerCase().includes(depart.toLowerCase()) : true;
+      const matchesArrivee = arrivee ? trajet.arrivee.toLowerCase().includes(arrivee.toLowerCase()) : true;
+      const matchesDate = date ? trajet.date === date : true;
+      return matchesDepart && matchesArrivee && matchesDate;
+    });
+  }
+
+  // Fonction pour afficher les trajets
   function displayTrajets(trajets) {
-      if (trajets.length === 0) {
-          trajetList.innerHTML = '<p>Aucun trajet disponible.</p>';
-          return;
-      }
+    const trajetList = document.getElementById('trajet-list');
+    if (!trajetList) {
+      console.error('Element #trajet-list non trouvé dans le DOM');
+      return;
+    }
 
-      trajetList.innerHTML = trajets.map(trajet => `
-          <div class="trajet-card">
-              <div class="trajet-header">
-                  <h3>${trajet.depart} → ${trajet.arrivee}</h3>
-                  <span class="eco-badge">${trajet.vehicule}</span>
-              </div>
-              <div class="trajet-details">
-                  <p><strong>Date:</strong> ${trajet.date}</p>
-                  <p><strong>Heure:</strong> ${trajet.heure}</p>
-                  <p><strong>Places:</strong> ${trajet.places}</p>
-                  <p><strong>Véhicule:</strong> ${trajet.vehicule}</p>
-              </div>
-              <button class="btn-secondary">Réserver</button>
-          </div>
-      `).join('');
+    if (trajets.length === 0) {
+      trajetList.innerHTML = '<p>Aucun trajet disponible.</p>';
+      return;
+    }
+
+    trajetList.innerHTML = trajets.map(trajet => `
+      <div class="trajet-card">
+        <div class="trajet-header">
+          <h3>${trajet.depart} → ${trajet.arrivee}</h3>
+          <span class="eco-badge">${trajet.vehicule}</span>
+        </div>
+        <div class="trajet-details">
+          <p><strong>Date:</strong> ${trajet.date}</p>
+          <p><strong>Heure:</strong> ${trajet.heure}</p>
+          <p><strong>Places:</strong> ${trajet.places}</p>
+          <p><strong>Véhicule:</strong> ${trajet.vehicule}</p>
+        </div>
+        <button class="btn-secondary">Réserver</button>
+      </div>
+    `).join('');
   }
 
   // Charger les trajets au démarrage
+  async function fetchTrajets() {
+    try {
+      const response = await fetch('http://localhost:3000/api/trajets');
+      allTrajets = await response.json();
+      displayTrajets(allTrajets); // Afficher tous les trajets par défaut
+    } catch (error) {
+      console.error('Erreur lors de la récupération des trajets :', error);
+    }
+  }
+
   fetchTrajets();
 });
