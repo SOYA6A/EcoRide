@@ -184,3 +184,83 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
   console.log('Recherche effectuée :', { depart, arrivee, date, passengers });
   // Ajoutez ici la logique pour filtrer les covoiturages
 });
+
+
+
+
+
+
+
+// Récupérer les trajets depuis le backend
+async function fetchTrajets() {
+  try {
+    const response = await fetch('http://localhost:3000/api/trajets');
+    const trajets = await response.json();
+    console.log('Trajets reçus :', trajets); // Afficher les trajets dans la console
+    displayTrajets(trajets);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des trajets :', error);
+  }
+}
+
+// Afficher les trajets dans la page
+function displayTrajets(trajets) {
+  const trajetList = document.getElementById('trajets');
+  if (!trajetList) {
+    console.error('Element #trajets non trouvé dans le DOM');
+    return;
+  }
+
+  trajetList.innerHTML = trajets.map(trajet => `
+    <div class="trajet-item">
+      <p><strong>${trajet.depart} → ${trajet.destination}</strong></p>
+      <p>Conducteur : ${trajet.conducteur}</p>
+      <p>Places disponibles : ${trajet.placesDisponibles}</p>
+    </div>
+  `).join('');
+}
+
+// Charger les trajets au démarrage
+fetchTrajets();
+
+document.addEventListener('DOMContentLoaded', function () {
+  const trajetList = document.getElementById('trajet-list');
+
+  // Récupérer les trajets depuis l'API
+  async function fetchTrajets() {
+      try {
+          const response = await fetch('http://localhost:3000/api/trajets');
+          const trajets = await response.json();
+          displayTrajets(trajets);
+      } catch (error) {
+          console.error('Erreur lors de la récupération des trajets :', error);
+      }
+  }
+
+  // Afficher les trajets dans la page
+  function displayTrajets(trajets) {
+      if (trajets.length === 0) {
+          trajetList.innerHTML = '<p>Aucun trajet disponible.</p>';
+          return;
+      }
+
+      trajetList.innerHTML = trajets.map(trajet => `
+          <div class="trajet-card">
+              <div class="trajet-header">
+                  <h3>${trajet.depart} → ${trajet.arrivee}</h3>
+                  <span class="eco-badge">${trajet.vehicule}</span>
+              </div>
+              <div class="trajet-details">
+                  <p><strong>Date:</strong> ${trajet.date}</p>
+                  <p><strong>Heure:</strong> ${trajet.heure}</p>
+                  <p><strong>Places:</strong> ${trajet.places}</p>
+                  <p><strong>Véhicule:</strong> ${trajet.vehicule}</p>
+              </div>
+              <button class="btn-secondary">Réserver</button>
+          </div>
+      `).join('');
+  }
+
+  // Charger les trajets au démarrage
+  fetchTrajets();
+});

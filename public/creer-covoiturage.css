@@ -124,3 +124,67 @@ select:focus {
 .btn i {
     margin-right: 8px;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    padding: 2rem;
+}
+
+.trajet-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.trajet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.trajet-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.eco-badge {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.trajet-details p {
+    margin: 0.5rem 0;
+}
+
+.btn-secondary {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-secondary:hover {
+    background-color: #45a049;
+}
