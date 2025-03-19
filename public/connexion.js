@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('user', JSON.stringify(data.user));
 
         setTimeout(() => {
-          window.location.href = 'index.html';
+          window.location.href = 'espace-utilisateur.html';
         }, 1000);
       } catch (error) {
         showMessage('error', error.message || 'Erreur de connexion.');

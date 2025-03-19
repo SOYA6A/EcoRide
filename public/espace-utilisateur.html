@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Utilisateur - EcoRide</title>
+    <link rel="stylesheet" href="espace-utilisateur.css">
+</head>
+<body>
+    <header>
+  
+  
+        <nav> 
+            <div class="logo">Eco-Ride</div>
+            <ul class="menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="connexion.html">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="welcome-section">
+            <h1>Bienvenue, <span id="username"></span> !</h1>
+            <p>Vous êtes maintenant connecté à votre espace utilisateur.</p>
+        </section>
+
+        <section class="stats-section">
+            <h2>Vos statistiques</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Trajets effectués</h3>
+                    <p id="trajets-effectues">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Émissions CO2 économisées</h3>
+                    <p id="co2-economise">0 kg</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Points gagnés</h3>
+                    <p id="points-gagnes">0</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="actions-section">
+            <h2>Actions</h2>
+            <div class="actions-grid">
+                <a href="creer-covoiturage.html" class="action-card">
+                    <h3>Créer un covoiturage</h3>
+                    <p>Proposez un trajet à d'autres utilisateurs.</p>
+                </a>
+                <a href="rechercher-trajets.html" class="action-card">
+                    <h3>Rechercher un trajet</h3>
+                    <p>Trouvez un covoiturage près de chez vous.</p>
+                </a>
+                <a href="historique.html" class="action-card">
+                    <h3>Voir l'historique</h3>
+                    <p>Consultez vos trajets passés.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="espace-utilisateur.js"></script>
+</body>
+</html>
