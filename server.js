@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = 3000;
@@ -10,7 +12,11 @@ app.use(cors()); // Permet les requêtes depuis votre front-end
 app.use(bodyParser.json());
 
 // Base de données temporaire (en production, utilisez une vraie base de données)
-let trajets = [];
+let users = []; // Stocker les utilisateurs
+let trajets = []; // Stocker les trajets
+
+// Clé secrète pour JWT (à remplacer par une clé sécurisée en production)
+const JWT_SECRET = 'votre_secret_jwt';
 
 // Route pour obtenir tous les trajets
 app.get('/api/trajets', (req, res) => {
@@ -29,70 +35,65 @@ app.post('/api/trajets', (req, res) => {
   res.status(201).json(nouveauTrajet);
 });
 
-// Démarrer le serveur
-app.listen(PORT, () => {
-  console.log(`Serveur API démarré sur http://localhost:${PORT}`);
+// Route pour l'inscription
+app.post('/api/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  try {
+    // Vérifier si l'utilisateur existe déjà
+    const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(400).json({ message: 'Cet email est déjà utilisé.' });
+    }
+
+    // Hacher le mot de passe
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Créer un nouvel utilisateur
+    const user = { id: Date.now().toString(), username, email, password: hashedPassword };
+    users.push(user);
+
+    // Générer un token JWT
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(201).json({ token, user: { id: user.id, username: user.username, email: user.email } });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur lors de l\'inscription.', error: err.message });
+  }
 });
 
+// Route pour la connexion
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
 
+  try {
+    // Vérifier si l'utilisateur existe
+    const user = users.find(user => user.email === email);
+    if (!user) {
+      return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
+    }
+
+    // Vérifier le mot de passe
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Email ou mot de passe incorrect.' });
+    }
+
+    // Générer un token JWT
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ token, user: { id: user.id, username: user.username, email: user.email } });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur lors de la connexion.', error: err.message });
+  }
+});
+
+// Route racine
 app.get('/', (req, res) => {
   res.send('Bienvenue sur l\'API de covoiturage écologique. Utilisez /api/trajets pour accéder aux données.');
 });
 
-
-// Ajouter ceci à votre server.js
-app.use(express.static('public')); 
-
-
-
-const express = require('express');
-const cors = require('cors');
-const app = express();
-const port = 3000;
-
-app.use(cors());
-app.use(express.json());
-
-let rides = [];
-
-app.get('/api/rides', (req, res) => {
-  res.json(rides);
-});
-
-app.post('/api/rides', (req, res) => {
-  const newRide = req.body;
-  rides.push(newRide);
-  res.status(201).json(newRide);
-});
-
-app.listen(port, () => {
-  console.log(`Serveur démarré sur http://localhost:${port}`);
-});
-
-const express = require('express');
-const cors = require('cors');
-const app = express();
-const port = 3000;
-
-app.use(cors());
-app.use(express.json());
-
-// Données temporaires (à remplacer par une base de données)
-let trajets = [];
-
-// Route pour récupérer tous les trajets
-app.get('/api/trajets', (req, res) => {
-    res.json(trajets);
-});
-
-// Route pour créer un nouveau trajet
-app.post('/api/trajets', (req, res) => {
-    const nouveauTrajet = req.body;
-    trajets.push(nouveauTrajet);
-    res.status(201).json(nouveauTrajet);
-});
-
 // Démarrer le serveur
-app.listen(port, () => {
-    console.log(`Serveur démarré sur http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Serveur API démarré sur http://localhost:${PORT}`);
 });
