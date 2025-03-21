@@ -22,11 +22,14 @@ Technologies utilisées:
 - HTML
 - CSS
 - JavaScript
+- mongodb
+
 
 Feuille de route:
 - Ajouter un système d'authentification
 - button connection in progress 👩🏽‍💻⚠️
-- connecter le bouton connexion avec API
+- button connexion connecté a une api avec succes
+
   
    ✅ Affichage des trajets récents
   
