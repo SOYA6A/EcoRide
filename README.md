@@ -33,18 +33,20 @@ Feuille de route:
   
    ✅ Affichage des trajets récents
   
-   ✅ Formulaire de création de cvoiturage
+   ✅ Formulaire de création de covoiturage
 
    ✅ Section contact avec les mentions l
 
-   ✅ Section envoyez-nous un message 
+   ✅ Section envoyez-nous un message
+   ✅ button connexion connected a mon api
+  
 
   Objectif: Ajouter des fonctionnalités essentielles
   
   ⬜️ Système d'authentification utilisateur:
-  - Inscription
-  - Profil utilisateur
-  - Connection
+  - Inscription okay
+  - Profil utilisateur en cours
+  - Connection en cours
  
   ⬜️ Système de réservation de trajet:
   - Confirmation de réservation (par mail maybe)
