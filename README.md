@@ -26,8 +26,8 @@ Technologies utilisées:
 
 
 Feuille de route:
-- Ajouter un système d'authentification
-- button connection in progress 👩🏽‍💻⚠️
+- Ajouter un système d'authentification (done) 
+- button connexion in progress 👩🏽‍💻⚠️ (manque le style)
 - button connexion connecté a une api avec succes
 
   
