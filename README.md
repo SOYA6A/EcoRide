@@ -1,31 +1,31 @@
-#EcoRide 🌿🚙🛣️
+# EcoRide 🌿🚙🛣️
 
 
-##Description du projet:
+## Description du projet:
 
 
 EcoRide est une plateforme qui permet aux utilisateur de créer et partager des trajets de manière ecologique, en proposant les transports partagé et en reduisant les emissions de CO2.
 
 
-##Fonctionnalités principales:
+## Fonctionnalités principales:
 - 🗺️ création de trajet avec formulaire détaillé.
 - 📅 Système de réservation de covoiturage.
 - 🚗 filtrage des vehicules par type (essence, hybride, électrique ect).
 
 
-##Utilisation:
+## Utilisation:
 - Cliquez sur le bouton "créer un covoiturage".
 - Remplissez le formulaire avec vos information de trajet.
 - Publiez votre covoiturage.
 
-##Technologies utilisées:
+## Technologies utilisées:
 - HTML
 - CSS
 - JavaScript
 - mongodb
 
 
-##Feuille de route:
+## Feuille de route:
 - Ajouter un système d'authentification (done) 
 - button connexion in progress 👩🏽‍💻⚠️ (manque le style)
 - button connexion connecté a une api avec succes
