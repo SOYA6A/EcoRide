@@ -7,10 +7,36 @@ body {
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
     padding: 1rem;
     text-align: center;
+}
+
+/* pour les deux boutons accueil et connexion */
+
+/* Style de base des liens */
+.menu li a {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-weight: 500;
+    color: black;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+/* Style au survol */
+.menu li a:hover {
+    background-color: #f0f0f0;
+    color: light green;
+    transform: translateY(-2px);
+}
+
+.menu li a:hover::after {
+    width: 100%;
 }
 
 .auth-container {
@@ -48,5 +74,11 @@ header {
 }
 
 .btn-primary:hover {
-    background-color: #45a049;
+    background-color: rgb(19, 135, 19);
+}
+
+/* bouton bas de page "déjà inscrit? connectez-vous" */
+a {
+    text-decoration: none;
+    color: green;
 }
