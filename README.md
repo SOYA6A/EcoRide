@@ -11,6 +11,7 @@ EcoRide est une plateforme qui permet aux utilisateur de créer et partager des 
 - 🗺️ création de trajet avec formulaire détaillé.
 - 📅 Système de réservation de covoiturage.
 - 🚗 filtrage des vehicules par type (essence, hybride, électrique ect).
+- 👩🏽‍💻  Creéation de profil.
 
 ## Capture d'écran 
 
