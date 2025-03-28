@@ -12,8 +12,20 @@
     padding: 0;
 }
 
+
+.signup-link{
+    color: #45a049;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+
+
+
+
+
 .btn-primary {
-    background-color: #4CAF50; /* Vert */
+    background-color: #4CAF50;
     color: white;
     padding: 12px 24px;
     margin: 12px;
