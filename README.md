@@ -55,5 +55,5 @@ EcoRide est une plateforme qui permet aux utilisateur de créer et partager des 
   - Connection en cours
  
   ⬜️ Système de réservation de trajet:
-  - Confirmation de réservation (par mail maybe)
+  - Confirmation de réservation (par mail en cours avec database)
   
