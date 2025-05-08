@@ -20,11 +20,9 @@ header {
     display: flex;
     padding: 0.5rem 1.2rem;
     text-decoration: none;
-    font-weight: 500;
     color: black;
     border-radius: 4px;
-    transition: all 0.3s ease;
-    background-color: transparent;
+   
 }
 
 /* Style au survol */
