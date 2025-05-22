@@ -97,3 +97,52 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Serveur API démarré sur http://localhost:${PORT}`);
 });
+
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+
+// Middleware
+app.use(bodyParser.json());
+
+// Mock database
+let users = [
+  { id: 1, username: 'test', email: 'test@example.com', password: 'test' }
+];
+let trajets = [];
+
+// Routes API
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+  const user = users.find(u => u.email === email && u.password === password);
+  
+  if (user) {
+    res.json({
+      token: 'mock-token',
+      user: { id: user.id, username: user.username, email: user.email }
+    });
+  } else {
+    res.status(401).json({ error: 'Identifiants invalides' });
+  }
+});
+
+app.post('/api/register', (req, res) => {
+  const { username, email, password } = req.body;
+  const newUser = {
+    id: users.length + 1,
+    username,
+    email,
+    password
+  };
+  users.push(newUser);
+  res.json({ success: true });
+});
+
+app.get('/api/users/:id/stats', (req, res) => {
+  res.json({
+    trajets: 5,
+    co2: 12,
+    points: 150
+  });
+});
+
