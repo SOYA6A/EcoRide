@@ -25,7 +25,7 @@
 ## 🛠️ Installation
 ```bash
 # 1. Cloner le dépôt
-git clone https://github.com/votre-user/EcoRide.git
+git https://github.com/SOYA6A/EcoRide.git
 cd EcoRide
 
 # 2. Installer les dépendances
