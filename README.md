@@ -1,9 +1,6 @@
 
 # EcoRide 🌿🚗 | Plateforme de covoiturage écologique
 
-![Statut du projet](https://img.shields.io/badge/Statut-En%20développement-orange) 
-![GitHub last commit](https://img.shields.io/github/last-commit/votre-user/EcoRide)
-
 ## 📝 Description
 **EcoRide** est une plateforme de covoiturage axée sur la réduction des émissions CO₂. Elle permet aux utilisateurs de :
 - Proposer/rechercher des trajets écologiques
