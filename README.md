@@ -17,7 +17,7 @@
 | Réservation                  | ✅           |
 | Filtres écologiques          | ✅           |
 | Authentification             | ⚠️ (en cours)|
-| Gestion des crédits          | ❌           |
+| Gestion des crédits          | ❌      en cours     |
 
 ## 🛠️ Installation
 ```bash
